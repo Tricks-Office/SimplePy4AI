@@ -146,7 +146,8 @@ def PptFont (TPath, RPath, EFont, HFont):
     for pptfile in pptfiles:
 
         # 파워포인트에서 파일 읽어오기
-        ppt = powerpoint.Presentations.Open(os.path.join(TPath,pptfile))
+        open_file_path = os.path.normpath(os.path.abspath(os.path.join(TPath,pptfile)))
+        ppt = powerpoint.Presentations.Open(open_file_path)
 
         # 모든 slide에 대해 반복
         for slide in ppt.Slides:
@@ -181,7 +182,8 @@ def PptFont (TPath, RPath, EFont, HFont):
 
 
         # 파워포인트에서 파일 저장하고 파워포인트 닫기
-        ppt.SaveAs (RPath + '\\R_' + pptfile)
+        save_file_path = os.path.normpath(os.path.abspath(os.path.join(RPath, 'R_' + pptfile)))
+        ppt.SaveAs (save_file_path)
         ppt.Close ()
 
 # PPT 단어 일괄 수정 (결과 저장 폴더, 작업 대상 폴더, 양식파일) 
@@ -285,7 +287,8 @@ def D_PDF(TPath,RPath):
     # 파일 이름별 반복하기
     for pptfile in pptfiles:
         # 파워포인트에서 파일 읽어오기
-        prs = powerpoint.Presentations.Open(os.path.join(TPath, pptfile))
+        open_file_path = os.path.normpath(os.path.abspath(os.path.join(TPath,pptfile)))
+        prs = powerpoint.Presentations.Open(open_file_path)
 
         # PDF 파일로 저장하기 ※ 파일형태 PDF를 의미하는 번호 : 32
         savefile = RPath + '/ppt_' + pptfile[:pptfile.find('.')] + '.pdf'
@@ -306,7 +309,8 @@ def D_PDF(TPath,RPath):
     # 워드 파일이름별 반복하기
     for wordfile in wordfiles:
         # 워드에서 파일 읽어오기
-        doc = word.Documents.Open(os.path.join(TPath,wordfile))
+        open_file_path = os.path.normpath(os.path.abspath(os.path.join(TPath,wordfile)))
+        doc = word.Documents.Open(open_file_path)
 
         # PDF 파일로 저장하기 ※ Word 파일형태 PDF를 의미하는 번호 : 17
         savefile = 'doc_' + wordfile[:wordfile.find('.')] + '.pdf'

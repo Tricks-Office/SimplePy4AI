@@ -314,9 +314,8 @@ def D_PDF(TPath,RPath):
 
         # PDF 파일로 저장하기 ※ Word 파일형태 PDF를 의미하는 번호 : 17
         savefile = 'doc_' + wordfile[:wordfile.find('.')] + '.pdf'
-        savefile = os.path.join(RPath, savefile)
-        savefile = savefile.replace('/','\\')
-        doc.SaveAs(savefile, 17)
+        save_file_path = os.path.normpath(os.path.abspath(os.path.join(RPath, savefile)))
+        doc.SaveAs(save_file_path , 17)
 
         # 읽었던 파일 닫기
         doc.Close()
@@ -331,11 +330,13 @@ def D_PDF(TPath,RPath):
     # 엑셀 파일 이름별 반복하기
     for xlfile in xlfiles:
         # 엑셀에서 파일 읽어오기
-        wb = excel.Workbooks.Open(os.path.join(TPath,xlfile))
+        open_file_path = os.path.normpath(os.path.abspath(os.path.join(TPath,xlfile)))
+        wb = excel.Workbooks.Open(open_file_path)
 
         # PDF 파일로 저장하기 ※ 파일형태 PDF를 의미하는 번호 : 32
         savefile = 'xl_' + xlfile[:xlfile.find('.')] + '.pdf'
-        wb.ExportAsFixedFormat(0, os.path.join(RPath,savefile))
+        save_file_path = os.path.normpath(os.path.abspath(os.path.join(RPath, savefile)))
+        wb.ExportAsFixedFormat(0, save_file_path)
 
         # 읽었던 파일 닫기
         wb.Close()
